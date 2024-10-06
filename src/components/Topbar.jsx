@@ -20,7 +20,7 @@ const Topbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
           <MenuIcon />
@@ -35,7 +35,7 @@ const Topbar = () => {
           </MenuItem>
         </Menu>
         <Typography variant="h6">
-          My App
+          Sandbox
         </Typography>
       </Toolbar>
     </AppBar>
