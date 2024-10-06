@@ -3,6 +3,7 @@ import { Grid, Paper, Typography, Slider } from '@mui/material';
 import GpxSelector from './GpxSelector';
 import Map from './Map';
 import GradientCard from './GradientCard';
+import ElevationChart from './ElevationChart';
 
 const CourseColumn = ({ title, geoData, onGeoDataChange, onHover, hoveredFeatureIndex, maxGradient }) => {
   return (
@@ -19,6 +20,7 @@ const CourseColumn = ({ title, geoData, onGeoDataChange, onHover, hoveredFeature
               </Typography>
             )}
             <GradientCard geoData={geoData.processed} maxGradient={maxGradient / 100} />
+            <ElevationChart geoData={geoData.processed} maxGradient={maxGradient / 100}/>
           </div>
         )}
       </Paper>
