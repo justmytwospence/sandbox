@@ -42,7 +42,7 @@ const GpxSelector = ({ onGeoDataChange }) => {
   // Process the raw geo data whenever it changes
   useEffect(() => {
     if (rawGeoData) {
-      const processedGeoData = processGeoData(rawGeoData, 3);
+      const processedGeoData = processGeoData(rawGeoData, 10);
       setProcessedGeoData(processedGeoData);
     }
   }, [rawGeoData]);

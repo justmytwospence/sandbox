@@ -58,7 +58,7 @@ const CourseComparison = () => {
             onChange={handleMaxGradientChange}
             aria-labelledby="max-gradient-slider"
             valueLabelDisplay="auto"
-            step={1}
+            step={0.1}
             marks
             min={0}
             max={20}

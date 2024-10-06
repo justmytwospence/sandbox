@@ -1,92 +1,93 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler);
 
 const ElevationChart = ({ geoData, maxGradient }) => {
   if (!geoData) {
     return <div>No data available</div>;
   }
 
-  const labels = geoData.map(point => point.cumulativeDistance.toFixed(2));
-  const elevationData = geoData.map(point => point.ele);
+  // Convert meters to miles and round to 2 decimal places for x-axis labels
+  const distance = geoData.map((point) => (point.cumulativeDistance * 0.000621371192).toFixed(2));
+  // Convert meters to feet for elevation
+  const elevationData = geoData.map(point => point.ele * 3.28084);
   const gradientData = geoData.map(point => point.gradient);
 
   const data = {
-    labels,
+    labels: distance,
     datasets: [
       {
-        label: 'Elevation (m)',
+        label: 'Elevation (ft)',
         data: elevationData,
-        borderColor: 'rgba(75, 192, 192, 1)',
+        borderColor: 'blue',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        yAxisID: 'y1',
-        pointRadius: 0, // Remove dots
+        yAxisID: 'elevation',
+        pointRadius: 0
       },
       {
         label: 'Gradient (%)',
         data: gradientData,
-        borderColor: context => {
-          const index = context.dataIndex;
-          const value = context.dataset.data[index];
-          return value > maxGradient ? 'rgba(255, 99, 132, 1)' : 'rgba(54, 162, 235, 1)';
+        borderColor: 'gray',
+        backgroundColor: 'rgba(128, 128, 128, 0.5)', // Transparent gray
+        yAxisID: 'gradient',
+        pointRadius: 0,
+        fill: true,
+        segment: {
+          borderColor: ctx => ctx.p0.parsed.y > maxGradient ? 'red' : 'gray',
+          backgroundColor: ctx => ctx.p0.parsed.y > maxGradient ? 'rgba(255, 0, 0, 0.5)' : 'rgba(128, 128, 128, 0.5)',
         },
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        yAxisID: 'y2',
-        pointRadius: 0, // Remove dots
       },
     ],
   };
 
   const options = {
     responsive: true,
+    animation: false,
     plugins: {
-      legend: {
-        position: 'top',
-      },
       title: {
         display: true,
         text: 'Elevation and Gradient Profile',
-      },
-      tooltip: {
-        mode: 'index',
-        intersect: false,
-        callbacks: {
-          label: function (context) {
-            let label = context.dataset.label || '';
-            if (label) {
-              label += ': ';
-            }
-            if (context.parsed.y !== null) {
-              label += context.parsed.y.toFixed(2);
-            }
-            return label;
-          },
-        },
       },
     },
     hover: {
       mode: 'index',
       intersect: false,
     },
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
     scales: {
       x: {
+        type: 'linear',
+        min: 0,
+        ticks: {
+          stepSize: 1,
+        },
         title: {
           display: true,
-          text: 'Cumulative Distance (km)',
+          text: 'Miles'
         },
       },
-      y1: {
+      elevation: {
         type: 'linear',
         display: true,
         position: 'left',
         title: {
           display: true,
-          text: 'Elevation (m)',
+          text: 'Elevation (ft)',
+        },
+        ticks: {
+          stepSize: 500,
+          min: 0, 
+        },
+        grid: {
+          drawOnChartArea: false, // Disable grid lines for y1 axis
         },
       },
-      y2: {
+      gradient: {
         type: 'linear',
         display: true,
         position: 'right',
@@ -94,8 +95,16 @@ const ElevationChart = ({ geoData, maxGradient }) => {
           display: true,
           text: 'Gradient (%)',
         },
+        ticks: {
+          stepSize: 0.01,
+          callback: function (value) {
+            return value * 100 + '%'; // Format as percentage
+          },
+        },
         grid: {
-          drawOnChartArea: false,
+          drawOnChartArea: true,
+          drawTicks: true,
+          drawBorder: false,
         },
       },
     },
