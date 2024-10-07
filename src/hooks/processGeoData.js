@@ -17,20 +17,22 @@ const processGeoData = (geoData, windowSize = 3) => {
       const from = turfPoint([lon1, lat1]);
       const to = turfPoint([lon2, lat2]);
       const distance = turfDistance(from, to, { units: 'meters' });
-      const elevationChangeFeet = ele2 - ele1;
-      const elevationChangeMeters = elevationChangeFeet * 0.3048; // Convert feet to meters
+      const elevationChangeMeters = ele2 - ele1;
+      const elevationChangeFeet = elevationChangeMeters * 3.28084; // Convert meters to feet
       const gradient = elevationChangeMeters / distance;
 
       cumulativeDistance += distance;
-      enrichedCoordinates.push({
-        lon: lon2,
-        lat: lat2,
-        ele: ele2,
-        distance,
-        cumulativeDistance,
-        elevationChange: elevationChangeFeet,
-        gradient,
-      });
+      if (distance > 0) {
+        enrichedCoordinates.push({
+          lon: lon2,
+          lat: lat2,
+          ele: ele2,
+          distance,
+          cumulativeDistance,
+          elevationChange: elevationChangeFeet,
+          gradient,
+        });
+      };
     }
 
     return enrichedCoordinates;

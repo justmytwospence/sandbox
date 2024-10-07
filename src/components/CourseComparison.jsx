@@ -6,9 +6,9 @@ import Map from './Map';
 import { Grid2 } from '@mui/material';
 import GradientCard from './GradientCard';
 import ElevationChart from './ElevationChart';
-import ControlPanel from './ControlPanel';
 import GradientCdfChart from './GradientCdfChart';
 import Topbar from './Topbar';
+import RunnabilityChart from './RunnabilityChart';
 
 const CourseColumn = ({ title, geoData, onGeoDataChange, onHover, maxGradient }) => {
   return (
@@ -18,8 +18,9 @@ const CourseColumn = ({ title, geoData, onGeoDataChange, onHover, maxGradient })
         <Fragment>
           <Typography variant="h6">{title}</Typography>
           <Map geoData={geoData.raw} onHover={onHover} />
-          <GradientCard geoData={geoData.processed} maxGradient={maxGradient / 100} />
           <ElevationChart geoData={geoData.processed} maxGradient={maxGradient / 100} />
+          <GradientCard geoData={geoData.processed} maxGradient={maxGradient / 100} />
+          <RunnabilityChart geoData={geoData.processed} />
         </Fragment>
       )}
     </Fragment>
@@ -43,10 +44,6 @@ const CourseComparison = () => {
     <Fragment>
       <Topbar maxGradient={maxGradient} setMaxGradient={setMaxGradient}/>
       <Grid2 container spacing={3} sx={{ mt: 3, px: 2 }}>
-        {/* <ControlPanel 
-          maxGradient={maxGradient} 
-          setMaxGradient={setMaxGradient}
-        /> */}
         <Grid2 size={6}>
           <CourseColumn
             title="Course 1"
