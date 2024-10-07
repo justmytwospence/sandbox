@@ -98,7 +98,7 @@ const ElevationChart = ({ geoData, maxGradient }) => {
         ticks: {
           stepSize: 0.01,
           callback: function (value) {
-            return value * 100 + '%'; // Format as percentage
+            return (value * 100).toFixed(0) + '%'; // Format as percentage
           },
         },
         grid: {
