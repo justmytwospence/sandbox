@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tmcw/togeojson": "^5.8.1",
     "@turf/turf": "^7.1.0",
+    "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "chartjs-plugin-annotation": "^3.0.1",
     "leaflet": "^1.9.4",
