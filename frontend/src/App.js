@@ -1,8 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CourseComparison from './components/CourseComparison'; 
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import CourseComparison from './components/CourseComparison';
 import Homepage from './components/Homepage';
-import CourseUploader from './components/Courses';
+import Login from './components/Login';
+import Profile from './components/Profile';
+import Activities from './components/Activities';
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/course-comparison" element={<CourseComparison />} />
-          <Route path="/courses" element={<CourseUploader />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={ <Profile /> } />
+          <Route path="/activities" element={ <Activities /> } />
         </Routes>
       </div>
     </Router>

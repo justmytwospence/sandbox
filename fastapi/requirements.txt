@@ -1,0 +1,12 @@
+authlib
+fastapi
+geoalchemy2
+httpx
+itsdangerous
+psycopg2-binary
+pydantic
+pyjwt
+python-dotenv
+requests
+sqlalchemy
+uvicorn

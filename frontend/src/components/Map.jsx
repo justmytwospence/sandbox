@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 
 const GeoJSONLayer = ({ geoData, onHover }) => {
   const map = useMap();
@@ -20,6 +20,7 @@ const GeoJSONLayer = ({ geoData, onHover }) => {
       geoJsonLayer.addTo(map);
 
       // Fit bounds only when geoData changes
+      console.log(geoJsonLayer.getBounds());
       map.fitBounds(geoJsonLayer.getBounds());
 
       // Clean up the layer when the component unmounts or geoData changes
@@ -35,11 +36,8 @@ const GeoJSONLayer = ({ geoData, onHover }) => {
 const Map = ({ geoData, onHover }) => {
   return (
     <MapContainer style={{ height: '400px', width: '100%' }} center={[51.505, -0.09]} zoom={13}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {geoData && <GeoJSONLayer geoData={geoData} onHover={onHover} />}
+      <TileLayer url='https://tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token=bDE5WHMnFV1P973D59QWuGaq6hebBcjPSyud6vVGYqqi2r4kZyaShdbC3SF2Bc7y' />
+      {geoData && <GeoJSONLayer geoData={geoData} />}
     </MapContainer>
   );
 };
