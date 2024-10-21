@@ -35,7 +35,7 @@ oauth.register(
 async def get_authorization_code(request: Request):
     """OAuth2 flow, step 1: have the user log into Strava to obtain an authorization code grant"""
 
-    redirect_uri = request.url_for('auth')
+    redirect_uri = f'{API_HOST}/auth'
     return await oauth.strava.authorize_redirect(request, redirect_uri)
 
 
