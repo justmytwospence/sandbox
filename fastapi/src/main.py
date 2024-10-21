@@ -14,7 +14,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",
-    "https://strava.spencerboucher.com"
+    "https://strava.spencerboucher.com",
+    "https://strava.com"
 ]
 
 app.add_middleware(
