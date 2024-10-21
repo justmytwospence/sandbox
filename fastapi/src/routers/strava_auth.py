@@ -11,6 +11,9 @@ config = Config(".env")
 
 CLIENT_ID = config("STRAVA_CLIENT_ID", cast=str, default="")
 CLIENT_SECRET = config("STRAVA_CLIENT_SECRET", cast=str, default="")
+API_HOST = config("API_HOST", cast=str, default="http://localhost:8000")
+FRONTEND_HOST = config("FRONTEND_HOST", cast=str,
+                       default="http://localhost:3000")
 
 router = APIRouter(prefix="/api")
 
@@ -21,7 +24,7 @@ oauth.register(
     client_secret=CLIENT_SECRET,
     authorize_url='https://www.strava.com/oauth/authorize',
     access_token_url='https://www.strava.com/oauth/token',
-    redirect_uri='http://localhost:8000/auth',
+    redirect_uri=f'{API_HOST}/api/auth',
     scope='read_all,activity:read_all',
     client_kwargs={'token_endpoint_auth_method': 'client_secret_post'}
 )
@@ -47,7 +50,7 @@ async def auth(request: Request, db: Session = Depends(get_db)):
 
     user = create_user(token, db)
 
-    response = RedirectResponse(url="http://localhost:3000/login")
+    response = RedirectResponse(url=f"{FRONTEND_HOST}/login")
     response.set_cookie(key="jwt_token",
                         value=user.jwt_token,
                         httponly=True,
