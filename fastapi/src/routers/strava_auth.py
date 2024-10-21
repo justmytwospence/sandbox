@@ -24,7 +24,7 @@ oauth.register(
     client_secret=CLIENT_SECRET,
     authorize_url='https://www.strava.com/oauth/authorize',
     access_token_url='https://www.strava.com/oauth/token',
-    redirect_uri=f'{API_HOST}/api/auth',
+    redirect_uri=f'{API_HOST}/auth',
     scope='read_all,activity:read_all',
     client_kwargs={'token_endpoint_auth_method': 'client_secret_post'}
 )
