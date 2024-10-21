@@ -18,6 +18,7 @@ FRONTEND_HOST = config("FRONTEND_HOST", cast=str,
 router = APIRouter()
 
 oauth = OAuth()
+print(f'{API_HOST}/auth')
 oauth.register(
     name='strava',
     client_id=CLIENT_ID,
