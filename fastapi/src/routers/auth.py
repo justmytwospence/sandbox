@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 config = Config(".env")
 JWT_SECRET = config("JWT_SECRET", cast=str, default="")
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 
 def create_jwt_token(token: dict) -> str:

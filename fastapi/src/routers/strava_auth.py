@@ -15,7 +15,7 @@ API_HOST = config("API_HOST", cast=str, default="http://localhost:8000")
 FRONTEND_HOST = config("FRONTEND_HOST", cast=str,
                        default="http://localhost:3000")
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 oauth = OAuth()
 oauth.register(

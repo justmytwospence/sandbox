@@ -9,7 +9,7 @@ from starlette.config import Config
 config = Config(".env")
 JWT_SECRET = config("JWT_SECRET", cast=str, default="")
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 
 @router.get("/activities")
