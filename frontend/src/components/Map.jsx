@@ -20,7 +20,6 @@ const GeoJSONLayer = ({ geoData, onHover }) => {
       geoJsonLayer.addTo(map);
 
       // Fit bounds only when geoData changes
-      console.log(geoJsonLayer.getBounds());
       map.fitBounds(geoJsonLayer.getBounds());
 
       // Clean up the layer when the component unmounts or geoData changes

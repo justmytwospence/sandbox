@@ -1,18 +1,34 @@
-import polyline from "@mapbox/polyline";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Map from "./Map";
+import polyline from "@mapbox/polyline";
+
+const API_HOST = process.env.REACT_APP_API_HOST;
 
 export const checkToken = async () => {
   try {
-    const response = await fetch("http://localhost:8000/check-token", {
+    const response = await fetch(`${API_HOST}/api/check-token`, {
       method: "GET",
       credentials: "include",
     });
     const data = await response.json();
-    return Boolean(data.valid);
+    return Boolean(data.is_valid);
   } catch (error) {
     console.error("Error checking token:", error);
     return false;
+  }
+};
+
+export const fetchRoutes = async () => {
+  try {
+    const response = await fetch(`${API_HOST}/api/routes`, {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching routes:", error);
+    return [];
   }
 };
 
@@ -25,28 +41,26 @@ export default function Login() {
       const tokenValid = await checkToken();
       setIsLoggedIn(tokenValid);
       if (tokenValid) {
-        fetchRoutes();
+        const routesData = await fetchRoutes();
+        setRoutes(routesData);
       }
     };
     checkLoginStatus();
   }, []);
 
-  const fetchRoutes = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/routes", {
-        method: "GET",
-        credentials: "include",
-      });
-      const routes = await response.json();
-      setRoutes(routes);
-    } catch (error) {
-      console.error("Error fetching routes:", error);
-    }
+  const handleLogin = (event) => {
+    window.location.href = `${API_HOST}/api/login`;
   };
 
-  const handleLogin = (event) => {
-    window.location.href = "http://localhost:8000/login";
-  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      const fetchRoutesData = async () => {
+        const routesData = await fetchRoutes();
+        setRoutes(routesData);
+      };
+      fetchRoutesData();
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -54,16 +68,14 @@ export default function Login() {
         <h1>login page</h1>
         <div style={{ marginTop: 30 }}>
           {isLoggedIn ? (
-            <>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "20px" }}>
-                {routes.map((route) => (
-                  <div key={route.id} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "5px" }}>
-                    <h3>{route.name}</h3>
-                    <Map geoData={polyline.toGeoJSON(route.map.summary_polyline)} />
-                  </div>
-                ))}
-              </div>
-            </>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "20px" }}>
+              {routes.map((route) => (
+                <div key={route.id} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "5px" }}>
+                  <h3>{route.name}</h3>
+                  <Map geoData={polyline.toGeoJSON(route.map.summary_polyline)} />
+                </div>
+              ))}
+            </div>
           ) : (
             <button onClick={handleLogin}>Login with Strava</button>
           )}

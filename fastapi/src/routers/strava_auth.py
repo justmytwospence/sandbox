@@ -12,7 +12,7 @@ config = Config(".env")
 CLIENT_ID = config("STRAVA_CLIENT_ID", cast=str, default="")
 CLIENT_SECRET = config("STRAVA_CLIENT_SECRET", cast=str, default="")
 
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 oauth = OAuth()
 oauth.register(
