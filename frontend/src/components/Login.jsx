@@ -3,8 +3,6 @@ import Map from "./Map";
 import polyline from "@mapbox/polyline";
 
 const API_URL = process.env.REACT_APP_API_URL;
-console.log(API_URL)
-console.log(process.env.NODE_ENV)
 
 export const checkToken = async () => {
   try {
