@@ -1,4 +1,4 @@
-FROM node:23
+FROM node:lts-iron
 WORKDIR /frontend
 COPY package*.json ./
 RUN npm install
