@@ -49,8 +49,8 @@ export default function Login() {
   }, []);
 
   const handleLogin = (event) => {
-    console.log(API_HOST)
-    // window.location.href = `${API_HOST}/login`;
+    // console.log(API_HOST)
+    window.location.href = `${API_HOST}/login`;
   };
 
   useEffect(() => {
