@@ -15,9 +15,11 @@ FRONTEND_HOST = config("FRONTEND_HOST", cast=str,
 app = FastAPI()
 
 origins = [
+    "https://strava.com",
+    "https://www.strava.com",
     FRONTEND_HOST,
-    "https://strava.com"
 ]
+print(origins)
 
 app.add_middleware(
     CORSMiddleware,
