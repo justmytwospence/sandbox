@@ -9,12 +9,13 @@ from starlette.config import Config
 config = Config(".env")
 
 SESSION_SECRET = config("SESSION_SECRET", cast=str, default="")
+FRONTEND_HOST = config("FRONTEND_HOST", cast=str,
+                       default="http://localhost:3000")
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
-    "https://strava.spencerboucher.com",
+    FRONTEND_HOST,
     "https://strava.com"
 ]
 
