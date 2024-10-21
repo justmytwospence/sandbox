@@ -3,6 +3,7 @@ import Map from "./Map";
 import polyline from "@mapbox/polyline";
 
 const API_HOST = process.env.REACT_APP_API_HOST;
+console.log(API_HOST)
 
 export const checkToken = async () => {
   try {
@@ -49,7 +50,6 @@ export default function Login() {
   }, []);
 
   const handleLogin = (event) => {
-    // console.log(API_HOST)
     window.location.href = `${API_HOST}/login`;
   };
 
