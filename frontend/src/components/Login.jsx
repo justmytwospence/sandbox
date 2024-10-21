@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import Map from "./Map";
 import polyline from "@mapbox/polyline";
 
-const API_HOST = process.env.REACT_APP_API_HOST;
-console.log(API_HOST)
+const API_URL = process.env.REACT_APP_API_URL;
+console.log(API_URL)
+console.log(process.env.NODE_ENV)
 
 export const checkToken = async () => {
   try {
-    const response = await fetch(`${API_HOST}/check-token`, {
+    const response = await fetch(`${API_URL}/check-token`, {
       method: "GET",
       credentials: "include",
     });
@@ -21,7 +22,7 @@ export const checkToken = async () => {
 
 export const fetchRoutes = async () => {
   try {
-    const response = await fetch(`${API_HOST}/routes`, {
+    const response = await fetch(`${API_URL}/routes`, {
       method: "GET",
       credentials: "include",
     });
@@ -50,7 +51,7 @@ export default function Login() {
   }, []);
 
   const handleLogin = (event) => {
-    window.location.href = `${API_HOST}/login`;
+    window.location.href = `${API_URL}/login`;
   };
 
   useEffect(() => {
